@@ -1,6 +1,8 @@
 import 'package:bookstore_app/core/utils/app_colors.dart';
 import 'package:bookstore_app/core/utils/text_style.dart';
 import 'package:bookstore_app/core/widgets/custome_elevated_button.dart';
+import 'package:bookstore_app/features/auth/create_account_screen.dart';
+import 'package:bookstore_app/features/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -26,10 +28,27 @@ class WelcomeScreen extends StatelessWidget {
               children: [
                 SvgPicture.asset('assets/logo.svg', height: 50, width: 85),
                 SizedBox(height: 60),
-                CustomElevatedButton(onPressed:(){} , text:'Login'  ),
-              SizedBox(height: 15),
-                 CustomElevatedButton(onPressed:(){},backgroundColor: AppColors.white , text:'Create Account',textStyle:  getBodyStyle(color:AppColors.primary),  )
-               
+                CustomElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    },
+                    text: 'Login'),
+                SizedBox(height: 15),
+                CustomElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreateAccountPage()),
+                    );
+                  },
+                  backgroundColor: AppColors.white,
+                  text: 'Create Account',
+                  textStyle: getBodyStyle(color: AppColors.primary),
+                )
               ],
             ),
           ),
