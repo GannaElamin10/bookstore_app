@@ -1,4 +1,5 @@
 import 'package:bookstore_app/features/auth/create_account_screen.dart';
+import 'package:bookstore_app/core/widgets/navigation_bar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -92,13 +93,19 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('تم تسجيل الدخول بنجاح'),
-                          backgroundColor: Colors.green,
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (BuildContext) {
+                      //   return NavigationBar();
+                      // }));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => NavigationBarScreen()));
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     content: Text('تم تسجيل الدخول بنجاح'),
+                      //     backgroundColor: Colors.green,
+                      //     duration: Duration(seconds: 2),
+                      //   ),
+                      // );
                     },
                     child: Text(
                       'Log in',
