@@ -4,6 +4,7 @@ class BookDetails extends StatefulWidget {
   const BookDetails({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _BookDetailsState createState() => _BookDetailsState();
 }
 
@@ -15,10 +16,13 @@ class _BookDetailsState extends State<BookDetails> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-       
-       leading:  IconButton(onPressed: (){Navigator.pop(context);}, 
-       icon: Icon(Icons.arrow_back),
-      ),),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back),
+          ),
+        ),
         backgroundColor: Colors.grey[200],
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -135,7 +139,8 @@ class _BookDetailsState extends State<BookDetails> {
                   children: [
                     Text(
                       'Book Details',
-                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                     )
                   ],
                 ),
@@ -148,9 +153,9 @@ class _BookDetailsState extends State<BookDetails> {
                 Row(
                   children: [
                     (Text(
-                      
                       'Book Title :',
-                      style: TextStyle(fontWeight: FontWeight.bold,fontSize:16 ),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     )),
                     Text(' Rich Dad And Poor Dad')
                   ],
@@ -162,7 +167,8 @@ class _BookDetailsState extends State<BookDetails> {
                   children: [
                     (Text(
                       'Author :',
-                      style: TextStyle(fontWeight: FontWeight.bold,fontSize:16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     )),
                     Text(' Robert T. Kiyosaki')
                   ],
@@ -174,7 +180,8 @@ class _BookDetailsState extends State<BookDetails> {
                   children: [
                     (Text(
                       'ASIN:',
-                      style: TextStyle(fontWeight: FontWeight.bold,fontSize:16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     )),
                     Text(' B09TWSRMCB')
                   ],

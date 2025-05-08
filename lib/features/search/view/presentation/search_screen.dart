@@ -7,7 +7,6 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-     
       body: CustomScrollView(slivers: [
         SliverToBoxAdapter(
           child: Padding(
@@ -15,40 +14,41 @@ class SearchScreen extends StatelessWidget {
             child: Column(
               children: [
                 Row(
-  children: [
-    Expanded(
-      child: TextField(
-        decoration: InputDecoration(
-          suffixIconColor: Colors.pinkAccent,
-          suffixIcon: Icon(Icons.search),
-          hintText: 'Search',
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.white),
-          ),
-          filled: true,
-          fillColor: Colors.white,
-        ),
-      ),
-    ),
-    SizedBox(width: 10),
-    Container(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade300),
-        color: Colors.white,
-      ),
-      child: Row(
-        children: const [
-          Icon(Icons.filter_list, size: 20),
-          SizedBox(width: 4),
-          Text('Filter'),
-        ],
-      ),
-    ),
-  ],
-),
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          suffixIconColor: Colors.pinkAccent,
+                          suffixIcon: Icon(Icons.search),
+                          hintText: 'Search',
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.grey.shade300),
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        children: const [
+                          Icon(Icons.filter_list, size: 20),
+                          SizedBox(width: 4),
+                          Text('Filter'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 20,
                 ),

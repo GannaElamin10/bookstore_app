@@ -15,7 +15,7 @@ class CustomListViewItem extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-       foregroundDecoration: BoxDecoration(
+      foregroundDecoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(12),
       ),

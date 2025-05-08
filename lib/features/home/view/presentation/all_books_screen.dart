@@ -7,18 +7,20 @@ class AllBooksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-       appBar: AppBar(
-       
-       leading:  IconButton(onPressed: (){Navigator.pop(context);}, 
-       icon: Icon(Icons.arrow_back),
-      ),),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
+      ),
       body: CustomScrollView(slivers: [
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                
                 Row(
                   children: [
                     _buildBookCard(),
@@ -26,8 +28,7 @@ class AllBooksScreen extends StatelessWidget {
                     _buildBookCard(),
                   ],
                 ),
-                SizedBox(height: 20),   
-                
+                SizedBox(height: 20),
                 Row(
                   children: [
                     _buildBookCard(),
@@ -41,7 +42,6 @@ class AllBooksScreen extends StatelessWidget {
         ),
       ]),
     );
-    
   }
 
   Widget _buildBookCard() {

@@ -12,7 +12,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
         title: Text('Welcome'),
         actions: [WishListIcon()],
       ),
@@ -40,8 +39,8 @@ class HomeScreen extends StatelessWidget {
                   ),
                   TextButton.icon(
                     onPressed: () {
-Navigator.of(context).push(MaterialPageRoute(builder:(context) =>AllBooksScreen()));
-
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AllBooksScreen()));
                     },
                     icon: Icon(Icons.arrow_forward, color: Colors.pink),
                     label: Text(
@@ -71,7 +70,10 @@ Navigator.of(context).push(MaterialPageRoute(builder:(context) =>AllBooksScreen(
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   TextButton.icon(
-                    onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder:(context) =>AllBooksScreen()));},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AllBooksScreen()));
+                    },
                     icon: Icon(Icons.arrow_forward, color: Colors.pink),
                     label: Text(
                       'See All',

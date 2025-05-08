@@ -6,11 +6,9 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('Categories'),
-       
       ),
       backgroundColor: Colors.grey[200],
       body: CustomScrollView(slivers: [
@@ -19,7 +17,6 @@ class CategoryScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                
                 Row(
                   children: [
                     _buildCategoryCard(),
@@ -27,20 +24,18 @@ class CategoryScreen extends StatelessWidget {
                     _buildCategoryCard(),
                   ],
                 ),
-                SizedBox(height: 20),   
-                
+                SizedBox(height: 20),
                 Row(
                   children: [
-                  _buildCategoryCard(),
+                    _buildCategoryCard(),
                     SizedBox(width: 10),
                     _buildCategoryCard(),
                   ],
                 ),
-                  SizedBox(height: 20),   
-                
+                SizedBox(height: 20),
                 Row(
                   children: [
-                  _buildCategoryCard(),
+                    _buildCategoryCard(),
                     SizedBox(width: 10),
                     _buildCategoryCard(),
                   ],
@@ -55,7 +50,6 @@ class CategoryScreen extends StatelessWidget {
 
   Widget _buildCategoryCard() {
     return Container(
-     
       width: 180,
       color: Colors.white,
       padding: const EdgeInsets.all(12),
@@ -68,7 +62,6 @@ class CategoryScreen extends StatelessWidget {
             width: double.infinity,
             fit: BoxFit.cover,
           ),
-         
           const SizedBox(height: 12),
           const Text(
             'Rich Dad And Poor Dad',
@@ -76,11 +69,7 @@ class CategoryScreen extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 14,
             ),
-           
           ),
-       
-          
-         
         ],
       ),
     );

@@ -5,7 +5,11 @@ class BookListViewItem extends StatelessWidget {
   const BookListViewItem({super.key});
   @override
   Widget build(BuildContext context) {
-    return InkWell(onTap: (){Navigator.of(context).push(MaterialPageRoute(builder:(context) =>BookDetails()));},
+    return InkWell(
+      onTap: () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => BookDetails()));
+      },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
@@ -70,25 +74,19 @@ class BookListViewItem extends StatelessWidget {
                         Row(
                           children: [
                             IconButton(
-                              
                               icon: Icon(Icons.shopping_cart_outlined,
                                   color: Colors.pinkAccent),
-                              onPressed: () {
-                                
-                              },
+                              onPressed: () {},
                             ),
                             ClipOval(
                               child: Container(
-                                
                                 color: Colors.white,
                                 width: 40,
                                 height: 40,
                                 child: IconButton(
                                   icon: Icon(Icons.favorite_border,
                                       color: Colors.pinkAccent),
-                                  onPressed: () {
-                                   
-                                  },
+                                  onPressed: () {},
                                 ),
                               ),
                             ),
