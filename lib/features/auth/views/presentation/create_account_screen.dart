@@ -1,4 +1,4 @@
-import 'package:bookstore_app/features/auth/login_screen.dart';
+import 'package:bookstore_app/features/auth/views/presentation/login_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 

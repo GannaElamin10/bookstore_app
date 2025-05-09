@@ -7,7 +7,7 @@ abstract class Failure {
 
 class ServerFailure extends Failure {
   ServerFailure(super.errMessage);
-  factory ServerFailure.fromDioError(DioError dioError) {
+  factory ServerFailure.fromDioError(DioException dioError) {
     switch (dioError.type) {
       case DioExceptionType.connectionTimeout:
         return ServerFailure('Connection timeout with ApiServer');
@@ -28,7 +28,7 @@ class ServerFailure extends Failure {
     }
   }
   factory ServerFailure.fromResponse(int? statusCode, dynamic response) {
-    if (statusCode == 20 || statusCode == 201 || statusCode == 203) {
+    if (statusCode == 422 || statusCode == 201 || statusCode == 203) {
       return ServerFailure(response['error']['Message']);
     } else if (statusCode == 204) {
       return ServerFailure('Your request not found, Please try later!');

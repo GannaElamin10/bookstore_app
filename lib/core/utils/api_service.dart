@@ -7,9 +7,9 @@ class ApiService {
 
   Future<Map<String, dynamic>> get({required String endPoint}) async {
     var response = await dio.get(
-  '$_baseUrl$endPoint',
-  options: Options(headers: {'Authorization': 'Bearer YOUR_TOKEN'}),
-);
+      '$_baseUrl$endPoint',
+      options: Options(headers: {'Authorization': 'Bearer YOUR_TOKEN'}),
+    );
 
     return response.data;
   }
