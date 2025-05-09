@@ -1,7 +1,7 @@
 class BookModel {
   Data? data;
   String? message;
-  Error? error;
+  List<ErrorMessage>? error;
   int? status;
 
   BookModel({this.data, this.message, this.error, this.status});
@@ -9,7 +9,12 @@ class BookModel {
   BookModel.fromJson(Map<String, dynamic> json) {
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
     message = json['message'];
-    error = json['error'] != null ? Error.fromJson(json['error']) : null;
+    if (json['error'] != null) {
+  error = [];
+  json['error'].forEach((v) {
+    error!.add(ErrorMessage.fromJson(v));
+  });
+}
     status = json['status'];
   }
 
@@ -20,7 +25,7 @@ class BookModel {
     }
     data['message'] = message;
     if (error != null) {
-      data['error'] = error!.toJson();
+      data['error'] = error!.map((v) => v.toJson()).toList();
     }
     data['status'] = status;
     return data;
@@ -28,86 +33,163 @@ class BookModel {
 }
 
 class Data {
-  User? user;
-  String? token;
+  List<Books>? books;
+  Meta? meta;
+  Links? links;
 
-  Data({this.user, this.token});
+  Data({this.books, this.meta, this.links});
 
   Data.fromJson(Map<String, dynamic> json) {
-    user = json['user'] != null ? User.fromJson(json['user']) : null;
-    token = json['token'];
+    if (json['books'] != null) {
+      books = <Books>[];
+      json['books'].forEach((v) {
+        books!.add(Books.fromJson(v));
+      });
+    }
+    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
+    links = json['links'] != null ? Links.fromJson(json['links']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (user != null) {
-      data['user'] = user!.toJson();
+    if (books != null) {
+      data['books'] = books!.map((v) => v.toJson()).toList();
     }
-    data['token'] = token;
+    if (meta != null) {
+      data['meta'] = meta!.toJson();
+    }
+    if (links != null) {
+      data['links'] = links!.toJson();
+    }
     return data;
   }
 }
 
-class User {
+class Books {
   int? id;
-  String? name;
-  String? email;
-  String? address;
-  String? city;
-  String? phone;
-  String? password;
+  String? isbnCode;
+  String? title;
   String? image;
+  String? author;
+  String? description;
+  String? price;
+  String? priceAfterDiscount;
+  String? discount;
+  int? stockQuantity;
+  int? categoryId;
+  int? publisherId;
 
-  User(
+  Books(
       {this.id,
-      this.name,
-      this.email,
-      this.address,
-      this.city,
-      this.phone,
-      this.password,
-      this.image});
+      this.isbnCode,
+      this.title,
+      this.image,
+      this.author,
+      this.description,
+      this.price,
+      this.priceAfterDiscount,
+      this.discount,
+      this.stockQuantity,
+      this.categoryId,
+      this.publisherId});
 
-  User.fromJson(Map<String, dynamic> json) {
+  Books.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
-    email = json['email'];
-    address = json['address'];
-    city = json['city'];
-    phone = json['phone'];
-    password = json['password'];
+    isbnCode = json['isbn_code'];
+    title = json['title'];
     image = json['image'];
+    author = json['author'];
+    description = json['description'];
+    price = json['price'];
+    priceAfterDiscount = json['price_after_discount'];
+    discount = json['discount'];
+    stockQuantity = json['stock_quantity'];
+    categoryId = json['category_id'];
+    publisherId = json['publisher_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['name'] = name;
-    data['email'] = email;
-    data['address'] = address;
-    data['city'] = city;
-    data['phone'] = phone;
-    data['password'] = password;
+    data['isbn_code'] = isbnCode;
+    data['title'] = title;
     data['image'] = image;
+    data['author'] = author;
+    data['description'] = description;
+    data['price'] = price;
+    data['price_after_discount'] = priceAfterDiscount;
+    data['discount'] = discount;
+    data['stock_quantity'] = stockQuantity;
+    data['category_id'] = categoryId;
+    data['publisher_id'] = publisherId;
     return data;
   }
 }
 
-class Error {
-  List<String>? email;
-  List<String>? password;
+class Meta {
+  int? total;
+  int? perPage;
+  int? cuurentPage;
+  int? lastPage;
 
-  Error({this.email, this.password});
+  Meta({this.total, this.perPage, this.cuurentPage, this.lastPage});
 
-  Error.fromJson(Map<String, dynamic> json) {
-    email = json['email'].cast<String>();
-    password = json['password'].cast<String>();
+  Meta.fromJson(Map<String, dynamic> json) {
+    total = json['total'];
+    perPage = json['per_page'];
+    cuurentPage = json['cuurent_page'];
+    lastPage = json['last_page'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['email'] = email;
-    data['password'] = password;
+    data['total'] = total;
+    data['per_page'] = perPage;
+    data['cuurent_page'] = cuurentPage;
+    data['last_page'] = lastPage;
     return data;
+  }
+}
+
+class Links {
+  String? first;
+  String? last;
+  String? prev;
+  String? next;
+
+  Links({this.first, this.last, this.prev, this.next});
+
+  Links.fromJson(Map<String, dynamic> json) {
+    first = json['first'];
+    last = json['last'];
+    prev = json['prev'];
+    next = json['next'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['first'] = first;
+    data['last'] = last;
+    data['prev'] = prev;
+    data['next'] = next;
+    return data;
+  }
+}
+
+class ErrorMessage {
+  final String? message;
+
+  ErrorMessage({this.message});
+
+  factory ErrorMessage.fromJson(Map<String, dynamic> json) {
+    return ErrorMessage(
+      message: json['message'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'message': message,
+    };
   }
 }

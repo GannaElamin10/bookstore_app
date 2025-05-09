@@ -71,30 +71,14 @@ class LoginScreen extends StatelessWidget {
                         controller: passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
-                          hintText: '*',
+                          hintText: '**********',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8)),
                           suffixIcon: const Icon(Icons.visibility_off),
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Checkbox(value: false, onChanged: (value) {}),
-                              const Text('Remember me'),
-                            ],
-                          ),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text('Forget your password?',
-                                style: TextStyle(color: Colors.pink)),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
+                    
+                      const SizedBox(height: 30),
                       SizedBox(
                         width: double.infinity,
                         height: 50,
@@ -116,45 +100,7 @@ class LoginScreen extends StatelessWidget {
                                       fontSize: 18, color: Colors.white)),
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      const Row(
-                        children: [
-                          Expanded(child: Divider()),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Text('Or login with'),
-                          ),
-                          Expanded(child: Divider()),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: OutlinedButton.icon(
-                              onPressed: () {},
-                              icon: const Icon(Icons.facebook,
-                                  color: Colors.blue),
-                              label: const Text('Facebook'),
-                              style: OutlinedButton.styleFrom(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 15)),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: OutlinedButton.icon(
-                              onPressed: () {},
-                              icon: const Icon(Icons.g_mobiledata,
-                                  color: Colors.red),
-                              label: const Text('Google'),
-                              style: OutlinedButton.styleFrom(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 15)),
-                            ),
-                          ),
-                        ],
-                      ),
+                     
                       const SizedBox(height: 30),
                       Center(
                         child: RichText(

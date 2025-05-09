@@ -80,6 +80,7 @@ class _BookDetailsState extends State<BookDetails> {
                                 color: Colors.black87,
                                 fontWeight: FontWeight.bold),
                           ),
+                       
                         ),
                       ),
                     ],

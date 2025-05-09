@@ -1,8 +1,11 @@
+import 'package:bookstore_app/features/home/data/models/book_model.dart';
 import 'package:bookstore_app/features/home/view/presentation/book_details.dart';
 import 'package:flutter/material.dart';
 
 class BookListViewItem extends StatelessWidget {
-  const BookListViewItem({super.key});
+  const BookListViewItem({super.key, required this.book});
+
+ final Books book;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -17,8 +20,8 @@ class BookListViewItem extends StatelessWidget {
           height: 124,
           child: Row(
             children: [
-              Image.asset(
-                'assets/image/ph1.png',
+              Image.network(
+                "http://10.0.2.2:8000/api/v1/${book.image!}",
                 width: 93,
                 height: 124,
                 fit: BoxFit.cover,
@@ -29,7 +32,7 @@ class BookListViewItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Rich Dad And Poor Dad',
+                    Text(book.title!,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     SizedBox(height: 4),
                     RichText(
@@ -43,7 +46,7 @@ class BookListViewItem extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                            text: 'Robert T. Kiyosaki',
+                            text: book.author,
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -62,7 +65,7 @@ class BookListViewItem extends StatelessWidget {
                             Icon(Icons.attach_money, color: Colors.black87),
                             SizedBox(width: 5),
                             Text(
-                              '40',
+                              book.price!,
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,

@@ -3,13 +3,13 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DioHelper {
   static Dio? dio;
-  static const String baseurl = "http://127.0.0.1:8000/api/v1";
+  static const String baseurl = "http://localhost:8000/api/v1";
 
   static init() {
     dio = Dio(BaseOptions(
       baseUrl: baseurl,
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
+      connectTimeout: const Duration(seconds: 530),
+      receiveTimeout: const Duration(seconds: 530),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
