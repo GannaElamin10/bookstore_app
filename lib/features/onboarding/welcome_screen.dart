@@ -1,8 +1,8 @@
 import 'package:bookstore_app/core/utils/app_colors.dart';
 import 'package:bookstore_app/core/utils/text_style.dart';
 import 'package:bookstore_app/core/widgets/custome_elevated_button.dart';
-import 'package:bookstore_app/features/auth/create_account_screen.dart';
-import 'package:bookstore_app/features/auth/login_screen.dart';
+import 'package:bookstore_app/features/auth/views/presentation/create_account_screen.dart';
+import 'package:bookstore_app/features/auth/views/presentation/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

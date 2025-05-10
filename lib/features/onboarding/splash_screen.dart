@@ -24,10 +24,22 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        Image.asset('assets/image/books_im.jpg',height: double.infinity,width: double.infinity, fit: BoxFit.fill),
-      Positioned(top: 250,left: 100,child: SvgPicture.asset('assets/logo.svg',height: 50,width:85 ,)),
-      ],),
+      body: Stack(
+        children: [
+          Image.asset('assets/image/books_im.jpg',
+              height: double.infinity,
+              width: double.infinity,
+              fit: BoxFit.fill),
+          Positioned(
+              top: 250,
+              left: 100,
+              child: SvgPicture.asset(
+                'assets/logo.svg',
+                height: 50,
+                width: 85,
+              )),
+        ],
+      ),
     );
   }
 }
