@@ -1,18 +1,24 @@
+import 'package:bookstore_app/core/services/dio_helper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:bookstore_app/features/home/data/models/book_model.dart';
 import 'package:bookstore_app/features/home/view/presentation/book_details.dart';
 import 'package:flutter/material.dart';
 
-class BookListViewItem extends StatelessWidget {
-  const BookListViewItem({super.key, required this.book});
+class RecommendedViewItem extends StatelessWidget {
+  const RecommendedViewItem({super.key, required this.book});
 
- final Books book;
+  final Books book;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => BookDetails()));
-      },
+  onTap: () {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => BookDetailsScreen(bookId: book.id!),
+      ),
+    );
+  },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
@@ -20,25 +26,34 @@ class BookListViewItem extends StatelessWidget {
           height: 124,
           child: Row(
             children: [
-              Image.network(
-                "http://10.0.2.2:8000/api/v1/${book.image!}",
-                width: 93,
-                height: 124,
-                fit: BoxFit.cover,
+              AspectRatio(
+                aspectRatio: 555 / 830,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: CachedNetworkImage(
+                    fit: BoxFit.fill,
+                    imageUrl: '${book.image}',
+                    errorWidget: (context, url, error) {
+                      return const Icon(Icons.error);
+                    },
+                  ),
+                ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(book.title!,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    SizedBox(height: 4),
+                    Text(
+                      book.title!,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 4),
                     RichText(
                       text: TextSpan(
                         children: [
-                          TextSpan(
+                          const TextSpan(
                             text: 'Author: ',
                             style: TextStyle(
                               color: Colors.grey,
@@ -47,7 +62,7 @@ class BookListViewItem extends StatelessWidget {
                           ),
                           TextSpan(
                             text: book.author,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
@@ -56,17 +71,17 @@ class BookListViewItem extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.attach_money, color: Colors.black87),
-                            SizedBox(width: 5),
+                            const Icon(Icons.attach_money, color: Colors.black87),
+                            const SizedBox(width: 5),
                             Text(
                               book.price!,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black87,
@@ -77,8 +92,10 @@ class BookListViewItem extends StatelessWidget {
                         Row(
                           children: [
                             IconButton(
-                              icon: Icon(Icons.shopping_cart_outlined,
-                                  color: Colors.pinkAccent),
+                              icon: const Icon(
+                                Icons.shopping_cart_outlined,
+                                color: Colors.pinkAccent,
+                              ),
                               onPressed: () {},
                             ),
                             ClipOval(
@@ -87,9 +104,19 @@ class BookListViewItem extends StatelessWidget {
                                 width: 40,
                                 height: 40,
                                 child: IconButton(
-                                  icon: Icon(Icons.favorite_border,
-                                      color: Colors.pinkAccent),
-                                  onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.favorite_border,
+                                    color: Colors.pinkAccent,
+                                  ),
+                                  onPressed: () async {
+                                    var x = await DioHelper.postData(
+                                      url: '/add-to-wishlist',
+                                      data: {'book_id': book.id},
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('${x.data['message']}')),
+                                    );
+                                  },
                                 ),
                               ),
                             ),
@@ -99,7 +126,7 @@ class BookListViewItem extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

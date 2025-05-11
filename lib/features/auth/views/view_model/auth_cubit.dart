@@ -16,6 +16,7 @@ class AuthCubit extends Cubit<AuthStates> {
       'password': password,
     }).then((value) {
       String message = value.data['message'];
+      DioHelper.token=value.data['data']['token'];
       emit(LoginSuccessState(message: message));
     }).onError((error, stackTrace) {
       emit(LoginErrorState(error: "Invalid email or password"));

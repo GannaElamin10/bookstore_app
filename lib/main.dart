@@ -1,7 +1,6 @@
 import 'package:bookstore_app/core/services/dio_helper.dart';
 import 'package:bookstore_app/features/onboarding/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
