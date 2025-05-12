@@ -7,7 +7,7 @@ class BookDetailsInitial extends BookDetailsState {}
 class BookDetailsLoading extends BookDetailsState {}
 
 class BookDetailsSuccess extends BookDetailsState {
-  final Book book;  // فقط الكتاب هنا
+  final Books book;  // فقط الكتاب هنا
   BookDetailsSuccess(this.book);
 }
 

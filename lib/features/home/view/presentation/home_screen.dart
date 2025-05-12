@@ -40,7 +40,6 @@ class HomeBody extends StatelessWidget {
             const SliverToBoxAdapter(child: BestSeller()),
             const RecommendedSection(),
             const BooksListSection(),
-            const SectionTitle(title: 'Flash Sale'),
             const SliverToBoxAdapter(child:FlashSale() ),
             // SliverList(
             

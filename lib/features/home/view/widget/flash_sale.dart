@@ -3,6 +3,7 @@ import 'package:bookstore_app/features/home/view/presentation/all_books_screen.d
 import 'package:bookstore_app/features/home/view/presentation/book_details.dart';
 import 'package:bookstore_app/features/home/view/view_model/cubit/flash_sale_cubit/flash_sale_cubit.dart';
 import 'package:bookstore_app/features/home/view/view_model/cubit/flash_sale_cubit/flash_sale_state.dart';
+import 'package:bookstore_app/features/home/view/widget/recommended_view_item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,7 +67,7 @@ class FlashSaleBody extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: state.books.length,
                 itemBuilder: (context, index) {
-                  return FlashSaleItem(book: state.books[index]);
+                  return RecommendedViewItem(book: state.books[index]);
                 },
                 separatorBuilder: (_, __) => const SizedBox(height: 8),
               ),

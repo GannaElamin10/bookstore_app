@@ -26,7 +26,7 @@ class BookDetailsScreen extends StatelessWidget {
               );
             }
 
-            final imageUrl = '${book.image}';
+          
 
             return Scaffold(
               appBar: AppBar(title: const Text('Book Details')),
@@ -38,7 +38,7 @@ class BookDetailsScreen extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.network(
-                        imageUrl,
+                        book.image??"",
                         height: 250,
                         width: double.infinity,
                         fit: BoxFit.cover,

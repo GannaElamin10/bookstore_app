@@ -78,7 +78,7 @@ class AllBooksItem extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.network(
-                  'http://127.0.0.1:8000/upload/categories/${book.image}',
+                 book.image,
                   height: 160,
                   width: double.infinity,
                   fit: BoxFit.cover,

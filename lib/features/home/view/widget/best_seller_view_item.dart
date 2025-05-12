@@ -9,7 +9,7 @@ class BestSellerViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("Image: ");
+    debugPrint("Ganna Image: ");
     debugPrint(book.image);
     return Container(
       width: 140,
@@ -20,16 +20,26 @@ class BestSellerViewItem extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.network(
-               '${book.image}',
+               book.image??"",
               height: 180,
               width: 140,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => Container(
+
+              errorBuilder: (context, error, stackTrace) {
+        // Print detailed error information
+        print('=== Image Loading Error ===');
+        print('Error: $error');
+        print('Error Type: ${error.runtimeType}');
+        print('Stack Trace: $stackTrace');
+        print('========================');
+        
+                return Container(
+              
                 color: Colors.grey[300],
                 height: 180,
                 width: 140,
                 child: const Icon(Icons.broken_image),
-              ),
+              );},
             ),
           ),
         

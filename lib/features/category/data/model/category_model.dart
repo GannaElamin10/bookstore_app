@@ -59,12 +59,17 @@ class Categories {
 
   Categories({this.id = 0, this.title = '', this.image = ''});
 
-  Categories.fromJson(Map<String, dynamic> json)
-      : id = json['id'] ?? 0,
-        title = json['title'] ?? '',
-        image = json['image'] != null
-            ? 'http://127.0.0.1:8000/upload/categories/${json['image']}'
-            : '';
+  factory Categories.fromJson(Map<String, dynamic> json)
+      { final _id = json['id'] ?? 0;
+        final _title = json['title'] ?? '';
+       final String _image = json['image'].replaceAll("127.0.0.1","192.168.1.24" ) ??"";
+        
+            return Categories(
+              id:_id,
+              title:_title,
+              image: _image,
+            );
+      }
 
   Map<String, dynamic> toJson() {
     return {

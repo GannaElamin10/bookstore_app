@@ -23,11 +23,11 @@ class RecommendedViewItem extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Container(
           color: Colors.white,
-          height: 124,
+          height: 150,
           child: Row(
             children: [
               AspectRatio(
-                aspectRatio: 555 / 830,
+                aspectRatio: 555 / 700,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImage(
@@ -48,8 +48,10 @@ class RecommendedViewItem extends StatelessWidget {
                     Text(
                       book.title!,
                       style: const TextStyle(fontWeight: FontWeight.bold),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 12),
                     RichText(
                       text: TextSpan(
                         children: [
@@ -72,6 +74,7 @@ class RecommendedViewItem extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
+                    Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -99,25 +102,20 @@ class RecommendedViewItem extends StatelessWidget {
                               onPressed: () {},
                             ),
                             ClipOval(
-                              child: Container(
-                                color: Colors.white,
-                                width: 40,
-                                height: 40,
-                                child: IconButton(
-                                  icon: const Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.pinkAccent,
-                                  ),
-                                  onPressed: () async {
-                                    var x = await DioHelper.postData(
-                                      url: '/add-to-wishlist',
-                                      data: {'book_id': book.id},
-                                    );
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text('${x.data['message']}')),
-                                    );
-                                  },
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.favorite_border,
+                                  color: Colors.pinkAccent,
                                 ),
+                                onPressed: () async {
+                                  var x = await DioHelper.postData(
+                                    url: '/add-to-wishlist',
+                                    data: {'book_id': book.id},
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('${x.data['message']}')),
+                                  );
+                                },
                               ),
                             ),
                           ],
