@@ -4,21 +4,54 @@ import 'package:bookstore_app/features/home/data/models/book_model.dart';
 import 'package:bookstore_app/features/home/view/presentation/book_details.dart';
 import 'package:flutter/material.dart';
 
-class RecommendedViewItem extends StatelessWidget {
+class RecommendedViewItem extends StatefulWidget {
   const RecommendedViewItem({super.key, required this.book});
 
   final Books book;
 
   @override
+  State<RecommendedViewItem> createState() => _RecommendedViewItemState();
+}
+
+class _RecommendedViewItemState extends State<RecommendedViewItem> {
+  bool isInWishlist = false;
+
+  Future<void> toggleWishlist() async {
+    if (isInWishlist) {
+      var response = await DioHelper.postData(
+        url: '/remove-from-wishlist',
+        data: {'book_id': widget.book.id},
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${response.data['message']}')),
+      );
+    } else {
+      var response = await DioHelper.postData(
+        url: '/add-to-wishlist',
+        data: {'book_id': widget.book.id},
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${response.data['message']}')),
+      );
+    }
+
+    setState(() {
+      isInWishlist = !isInWishlist;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final book = widget.book;
+
     return InkWell(
-  onTap: () {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => BookDetailsScreen(bookId: book.id!),
-      ),
-    );
-  },
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BookDetailsScreen(bookId: book.id!),
+          ),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
@@ -73,8 +106,7 @@ class RecommendedViewItem extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Spacer(),
+                    const Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -103,19 +135,13 @@ class RecommendedViewItem extends StatelessWidget {
                             ),
                             ClipOval(
                               child: IconButton(
-                                icon: const Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.pinkAccent,
+                                icon: Icon(
+                                  isInWishlist
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: Colors.pink,
                                 ),
-                                onPressed: () async {
-                                  var x = await DioHelper.postData(
-                                    url: '/add-to-wishlist',
-                                    data: {'book_id': book.id},
-                                  );
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('${x.data['message']}')),
-                                  );
-                                },
+                                onPressed: toggleWishlist,
                               ),
                             ),
                           ],

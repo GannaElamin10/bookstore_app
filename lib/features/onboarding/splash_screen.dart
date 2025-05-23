@@ -10,8 +10,10 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  
   @override
   void initState() {
+    
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
       // ignore: use_build_context_synchronously

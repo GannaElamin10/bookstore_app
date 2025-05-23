@@ -55,19 +55,22 @@ class Data {
 class Categories {
   int id;
   String title;
+  String? endpoint;
   String image;
 
-  Categories({this.id = 0, this.title = '', this.image = ''});
+  Categories({this.id = 0, this.title = '', this.image = '',this.endpoint});
 
   factory Categories.fromJson(Map<String, dynamic> json)
       { final _id = json['id'] ?? 0;
         final _title = json['title'] ?? '';
+         final _endpoint = json['/1/books'] ;
        final String _image = json['image'].replaceAll("127.0.0.1","192.168.1.24" ) ??"";
         
             return Categories(
               id:_id,
               title:_title,
               image: _image,
+              endpoint: _endpoint,
             );
       }
 

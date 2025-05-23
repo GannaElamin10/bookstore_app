@@ -1,5 +1,6 @@
 import 'package:bookstore_app/core/icons/wish_list_icon.dart';
 import 'package:bookstore_app/features/home/view/presentation/all_books_screen.dart';
+
 import 'package:bookstore_app/features/home/view/view_model/home_cubit.dart';
 import 'package:bookstore_app/features/home/view/view_model/home_state.dart';
 import 'package:bookstore_app/features/home/view/widget/flash_sale.dart';
@@ -93,7 +94,7 @@ class RecommendedSection extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const AllBooksScreen()),
+                  MaterialPageRoute(builder: (context) => AllBooksScreen()),
                 );
               },
               icon: const Icon(Icons.arrow_forward, color: Colors.pink),
