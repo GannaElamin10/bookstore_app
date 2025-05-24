@@ -1,8 +1,11 @@
 import 'package:bookstore_app/core/services/dio_helper.dart';
+import 'package:bookstore_app/features/cart/view/view_model/cart_cubit.dart';
+import 'package:bookstore_app/features/home/view/view_model/home_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:bookstore_app/features/home/data/models/book_model.dart';
 import 'package:bookstore_app/features/home/view/presentation/book_details.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RecommendedViewItem extends StatefulWidget {
   const RecommendedViewItem({super.key, required this.book});
@@ -65,7 +68,8 @@ class _RecommendedViewItemState extends State<RecommendedViewItem> {
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImage(
                     fit: BoxFit.fill,
-                    imageUrl: '${book.image}',
+                    imageUrl:
+                        'http://192.168.1.12:8000/upload/books/1747066544_6042394_153037.jpeg.webp',
                     errorWidget: (context, url, error) {
                       return const Icon(Icons.error);
                     },
@@ -112,7 +116,8 @@ class _RecommendedViewItemState extends State<RecommendedViewItem> {
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.attach_money, color: Colors.black87),
+                            const Icon(Icons.attach_money,
+                                color: Colors.black87),
                             const SizedBox(width: 5),
                             Text(
                               book.price!,
@@ -131,7 +136,13 @@ class _RecommendedViewItemState extends State<RecommendedViewItem> {
                                 Icons.shopping_cart_outlined,
                                 color: Colors.pinkAccent,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                // final cartCubit =
+                                //     BlocProvider.of<CartCubit>(context);
+                                // cartCubit.addToCart(book.id);
+                                BlocProvider.of<HomeCubit>(context)
+                                    .addToCart(book.id);
+                              },
                             ),
                             ClipOval(
                               child: IconButton(
