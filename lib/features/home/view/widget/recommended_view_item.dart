@@ -5,9 +5,10 @@ import 'package:bookstore_app/features/home/view/presentation/book_details.dart'
 import 'package:flutter/material.dart';
 
 class RecommendedViewItem extends StatefulWidget {
-  const RecommendedViewItem({super.key, required this.book});
+  const RecommendedViewItem({super.key, required this.book,this.showDiscount=false});
 
-  final Books book;
+  final BookModel book;
+  final bool showDiscount;
 
   @override
   State<RecommendedViewItem> createState() => _RecommendedViewItemState();
@@ -17,7 +18,7 @@ class _RecommendedViewItemState extends State<RecommendedViewItem> {
   bool isInWishlist = false;
 
   Future<void> toggleWishlist() async {
-    if (isInWishlist) {
+    if (widget.book.isFavourite) {
       var response = await DioHelper.postData(
         url: '/remove-from-wishlist',
         data: {'book_id': widget.book.id},
@@ -36,6 +37,8 @@ class _RecommendedViewItemState extends State<RecommendedViewItem> {
     }
 
     setState(() {
+      widget.book.isFavourite=!widget.book.isFavourite;
+
       isInWishlist = !isInWishlist;
     });
   }
@@ -112,10 +115,11 @@ class _RecommendedViewItemState extends State<RecommendedViewItem> {
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.attach_money, color: Colors.black87),
+                            const Text("EGP"),
+                            // const Icon(Icons.attach_money, color: Colors.black87),
                             const SizedBox(width: 5),
                             Text(
-                              book.price!,
+                             "${widget.showDiscount?book.priceAfterDiscount: book.price}",
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -136,7 +140,7 @@ class _RecommendedViewItemState extends State<RecommendedViewItem> {
                             ClipOval(
                               child: IconButton(
                                 icon: Icon(
-                                  isInWishlist
+                                  book.isFavourite
                                       ? Icons.favorite
                                       : Icons.favorite_border,
                                   color: Colors.pink,

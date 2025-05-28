@@ -8,7 +8,7 @@ import 'package:bookstore_app/features/home/view/view_model/cubit/wish_list_stat
 class WishListCubit extends Cubit<WishListState> {
   WishListCubit() : super(WishListInitial());
 
-  List<Books> _currentBooks = [];
+  List<BookModel> _currentBooks = [];
 
   Future<void> fetchWishlist() async {
     emit(WishListLoading());
@@ -16,7 +16,7 @@ class WishListCubit extends Cubit<WishListState> {
     try {
       final response = await DioHelper.getData(url: '/show-wishlist', query: {});
       final List<dynamic>? wishlistJson = response.data['data']['books'];
-      final books = wishlistJson?.map((json) => Books.fromJson(json)).toList() ?? [];
+      final books = wishlistJson?.map((json) => BookModel.fromJson(json)).toList() ?? [];
 
       _currentBooks = books;
       emit(WishListSuccess(books));

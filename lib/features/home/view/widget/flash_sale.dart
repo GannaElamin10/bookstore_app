@@ -68,7 +68,7 @@ class FlashSaleBody extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: state.books.length,
                 itemBuilder: (context, index) {
-                  return RecommendedViewItem(book: state.books[index]);
+                  return RecommendedViewItem(book: state.books[index],showDiscount: true);
                 },
                 separatorBuilder: (_, __) => const SizedBox(height: 8),
               ),
@@ -85,7 +85,7 @@ class FlashSaleBody extends StatelessWidget {
 class FlashSaleItem extends StatelessWidget {
   const FlashSaleItem({super.key, required this.book});
 
-  final Books book;
+  final BookModel book;
 
   @override
   Widget build(BuildContext context) {

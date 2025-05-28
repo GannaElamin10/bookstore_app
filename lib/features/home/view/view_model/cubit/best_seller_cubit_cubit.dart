@@ -23,7 +23,7 @@ class BestSellerCubit extends Cubit<BestSellerState> {
      final List<dynamic> booksJson = response.data['data']['slider'];
  
    
-      final books = booksJson.map((json) => Books.fromJson(json)).toList();
+      final books = booksJson.map((json) => BookModel.fromJson(json)).toList();
       
       emit(BestSellerSuccess(books));
     } on DioException catch (e) {

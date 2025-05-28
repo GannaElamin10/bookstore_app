@@ -7,7 +7,7 @@ class WishListInitial extends WishListState {}
 class WishListLoading extends WishListState {}
 
 class WishListSuccess extends WishListState {
-  final List<Books> books;
+  final List<BookModel> books;
 
   WishListSuccess(this.books);
 }

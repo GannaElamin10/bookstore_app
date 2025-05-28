@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 
 class BestSellerViewItem extends StatelessWidget {
-  final Books book;
+  final BookModel book;
 
   const BestSellerViewItem({super.key, required this.book});
 

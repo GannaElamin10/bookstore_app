@@ -56,7 +56,7 @@ class WishListBody extends StatelessWidget {
 }
 
 class WishListItem extends StatelessWidget {
-  final Books book;
+  final BookModel book;
 
   const WishListItem({super.key, required this.book});
 

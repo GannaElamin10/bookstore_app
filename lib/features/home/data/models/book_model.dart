@@ -1,53 +1,56 @@
 import 'package:bookstore_app/core/services/dio_helper.dart';
 
-class Books {
-  final int id;
-  final String isbnCode;
-  final String title;
-  final String image;
-  final String author;
-  final String description;
-  final String price;
-  final String? priceAfterDiscount;
-  final String? discount;
-  final int stockQuantity;
-  final int categoryId;
-  final int publisherId;
+// class Books {
+//   final int id;
+//   final String isbnCode;
+//   final String title;
+//   final String image;
+//   final String author;
+//   final String description;
+//   final String price;
+//   final String? priceAfterDiscount;
+//   final String? discount;
+//   final int stockQuantity;
+//   final int categoryId;
+//   final int publisherId;
+//   bool isFavourite;
 
-  Books({
-     required this.id,
-    required this.isbnCode,
-    required this.title,
-    required this.image,
-    required this.author,
-    required this.description,
-    required this.price,
-    this.discount,
-    required this.stockQuantity,
-    required this.categoryId,
-    required this.publisherId,
-    this.priceAfterDiscount,
-  });
+//   Books({
+//      required this.id,
+//     required this.isbnCode,
+//     required this.title,
+//     required this.image,
+//     required this.author,
+//     required this.description,
+//     required this.price,
+//     this.discount,
+//     required this.stockQuantity,
+//     required this.categoryId,
+//     required this.publisherId,
+//     this.priceAfterDiscount,
+//     this.isFavourite=false
+//   });
 
-  factory Books.fromJson(Map<String, dynamic> json) {
-        final String _image= json['image'].replaceAll("127.0.0.1",DioHelper.activeHost  ) ?? "";
+//   factory Books.fromJson(Map<String, dynamic> json) {
+//         final String _image= json['image'].replaceAll("127.0.0.1",DioHelper.activeHost  ) ?? "";
   
-    return Books(
-      id: json['id'],
-      isbnCode: json['isbn_code'] ?? '',
-      title: json['title'] ?? '',
-      image: _image ,
-      author: json['author'] ?? '',
-      description: json['description'] ?? '',
-      price: json['price'] ?? '',
-      priceAfterDiscount: json['price_after_discount'],
-      discount: json['discount'],
-      stockQuantity: json['stock_quantity'] ?? 0,
-      categoryId: json['category_id'] ?? 0,
-      publisherId: json['publisher_id'] ?? 0,
-    );
-  }
-}
+//     return Books(
+//       id: json['id'],
+//       isbnCode: json['isbn_code'] ?? '',
+//       title: json['title'] ?? '',
+//       image: _image ,
+//       author: json['author'] ?? '',
+//       description: json['description'] ?? '',
+//       price: json['price'] ?? '',
+//       priceAfterDiscount: json['price_after_discount'],
+//       discount: json['discount'],
+//       stockQuantity: json['stock_quantity'] ?? 0,
+//       categoryId: json['category_id'] ?? 0,
+//       publisherId: json['publisher_id'] ?? 0,
+//       isFavourite: json['is_favourite']??false,
+//     );
+//   }
+// }
 
 
 
@@ -64,6 +67,7 @@ class BookModel {
   final int stockQuantity;
   final int categoryId;
   final int publisherId;
+  bool isFavourite;
 
   BookModel({
     required this.id,
@@ -78,6 +82,7 @@ class BookModel {
     required this.stockQuantity,
     required this.categoryId,
     required this.publisherId,
+    this.isFavourite=false,
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
@@ -96,9 +101,11 @@ class BookModel {
       stockQuantity: json['stock_quantity'] ?? 0,
       categoryId: json['category_id'] ?? 0,
       publisherId: json['publisher_id'] ?? 0,
+      isFavourite: json['is_favourite'] ?? false,
     );
   }
 }
+
 class WishlistModel {
   final List<BookModel> books;
   final String message;
@@ -154,12 +161,12 @@ class BookDetails {
 }
 
 class Data {
-  Books? book;
+  BookModel? book;
 
   Data({this.book});
 
   Data.fromJson(Map<String, dynamic> json) {
-    book = json['book'] != null ? Books.fromJson(json['book']) : null;
+    book = json['book'] != null ? BookModel.fromJson(json['book']) : null;
   }
 
   // Map<String, dynamic> toJson() {

@@ -1,3 +1,5 @@
+import 'package:bookstore_app/core/services/dio_helper.dart';
+
 class CategoryModel {
   Data? data;
   String? message;
@@ -63,8 +65,8 @@ class Categories {
   factory Categories.fromJson(Map<String, dynamic> json)
       { final _id = json['id'] ?? 0;
         final _title = json['title'] ?? '';
-         final _endpoint = json['/1/books'] ;
-       final String _image = json['image'].replaceAll("127.0.0.1","192.168.1.24" ) ??"";
+       final String _image = json['image'].replaceAll("127.0.0.1",DioHelper.activeHost ) ??"";
+         final _endpoint = json['endPoint'] ;
         
             return Categories(
               id:_id,

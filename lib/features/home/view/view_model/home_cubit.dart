@@ -10,22 +10,29 @@ class HomeCubit extends Cubit<HomeStates> {
 
   HomeCubit get(context) => BlocProvider.of(context);
 
-  List<Books>? books;
+  List<BookModel>? books;
 
-  getlimitBooks() {
+  getlimitBooks() async {
     emit(GetLimitBooksLoadingState());
 
 
-    DioHelper.getData(url: "/books", query: {'limit': 2}).then((value) {
-      books = List<Books>.from(
-        value.data['data']['books'].map((book) => Books.fromJson(book)),
+    await DioHelper.getData(url: "/books", query: {'limit': 2}).then((value) async {
+      books = List<BookModel>.from(
+        value.data['data']['books'].map((book) => BookModel.fromJson(book)),
       );
-      
+
+
       emit(GetLimitBooksSucessState(books: books!));
     }).onError(
       (error, stackTrace) {
         emit(GetLimitBooksErrorState());
       },
     );
+  }
+
+  Future<void> getFavouriteBooks()async {
+      final response = await DioHelper.getData(url: '/show-wishlist', query: {});
+      final List<dynamic>? wishlistJson = response.data['data']['books'];
+      final favouriteBooks = wishlistJson?.map((json) => BookModel.fromJson(json)).toList() ?? [];
   }
 }

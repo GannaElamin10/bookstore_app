@@ -1,5 +1,8 @@
+
+
 import 'package:bookstore_app/core/services/dio_helper.dart';
 import 'package:bookstore_app/features/home/data/models/book_model.dart';
+import 'package:bookstore_app/features/search/view/presentation/custom_filter_dialog.dart';
 import 'package:bookstore_app/features/search/view/search/search_cubit.dart';
 import 'package:bookstore_app/features/search/view/search/search_state.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +13,10 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Ganna : building Search Screen");
     final SearchCubit searchCubit = SearchCubit();
     return BlocProvider(
-      create: (context) => searchCubit..fetchSearch,
+      create: (context) => searchCubit..fetchSearch..initialLoad(),
       child: Scaffold(
         backgroundColor: Colors.grey[200],
         body: CustomScrollView(
@@ -87,91 +91,6 @@ class SearchScreen extends StatelessWidget {
   }
 }
 
-class FilterDialog extends StatelessWidget {
-  const FilterDialog({required this.searchCubit, super.key});
-
-  final SearchCubit searchCubit;
-  @override
-  Widget build(BuildContext context) {
-    String selectedCategory = '';
-    double selectedPrice = 100; // default value, can be adjusted
-    List<String> categories = [
-      'All',
-      'Fiction',
-      'Science',
-      'History'
-    ]; // your real categories
-
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return AlertDialog(
-          title: Text('Filter Books'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Category Dropdown
-              DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'Category'),
-                value: selectedCategory.isEmpty ? null : selectedCategory,
-                items: categories.map((category) {
-                  return DropdownMenuItem(
-                    value: category,
-                    child: Text(category),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedCategory = value ?? '';
-                  });
-                },
-              ),
-              const SizedBox(height: 20),
-
-              // Price Slider
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Max Price: ${selectedPrice.toInt()}'),
-                  Slider(
-                    min: 0,
-                    max: 1000,
-                    value: selectedPrice,
-                    divisions: 20,
-                    label: selectedPrice.toStringAsFixed(0),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedPrice = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                print("filtering");
-                await searchCubit.fetchFilteredBooks(
-                  category: selectedCategory,
-                  price: selectedPrice.toInt(),
-                );
-                print("filtered");
-
-                Navigator.pop(context);
-              },
-              child: Text('Apply Filter'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
 
 class SearchBody extends StatelessWidget {
   const SearchBody({
@@ -211,7 +130,7 @@ class BookCardItem extends StatelessWidget {
     super.key,
   });
 
-  final Books book;
+  final BookModel book;
   @override
   Widget build(BuildContext context) {
     return Container(

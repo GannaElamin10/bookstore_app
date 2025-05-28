@@ -18,7 +18,7 @@ class HomeInitState extends HomeStates {}
 class GetLimitBooksLoadingState extends HomeStates {}
 
 class GetLimitBooksSucessState extends HomeStates {
-  final List<Books> books;
+  final List<BookModel> books;
 
   GetLimitBooksSucessState({required this.books});
 }

@@ -11,7 +11,7 @@ class FlashSaleCubit extends Cubit<FlashSaleState> {
    
       FlashSaleCubit get(context) => BlocProvider.of(context);
 
-List<Books>? books;
+List<BookModel>? books;
 
   getlimitBooks()async{
     
@@ -19,8 +19,8 @@ List<Books>? books;
     await DioHelper.getData(url: "/books-sale", query: {
       'limit' : 2
     }).then((value){
-      books = List<Books>.from(
-  value.data['data']['books'].map((book) => Books.fromJson(book)),
+      books = List<BookModel>.from(
+  value.data['data']['books'].map((book) => BookModel.fromJson(book)),
 );
       emit(FlashSaleSuccess(books: books!));
     }).onError((error, stackTrace) {

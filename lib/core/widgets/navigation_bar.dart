@@ -1,10 +1,11 @@
 import 'package:bookstore_app/features/category/view/presentation/category_screen.dart';
 import 'package:bookstore_app/features/home/view/presentation/home_screen.dart';
+import 'package:bookstore_app/features/order/cart_screen.dart';
+import 'package:bookstore_app/features/profile/profile_screen.dart';
 import 'package:bookstore_app/features/search/view/presentation/search_screen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import '../../features/cart/view/presentation/cart_screen.dart';
-import '../../features/profile/view/presentation/profile_screen.dart';
+
 
 class NavigationBarScreen extends StatefulWidget {
   const NavigationBarScreen({super.key});
@@ -18,8 +19,8 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
     HomeScreen(),
     CategoryScreen(),
     SearchScreen(),
-    CartScreen(),
-    ProfileScreen()
+    CartPage(),
+   ProfilePage()
   ];
   int currentIndex = 0;
   @override

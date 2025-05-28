@@ -7,7 +7,7 @@ class FlashSaleInitial extends FlashSaleState {}
 class FlashSaleLoading extends FlashSaleState {}
 
 class FlashSaleSuccess extends FlashSaleState {
-  final List<Books> books;
+  final List<BookModel> books;
 
   FlashSaleSuccess({required this.books});
 }

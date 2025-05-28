@@ -40,6 +40,9 @@ class AllBooksItem extends StatelessWidget {
         } else if (state is AllBooksError) {
           return Center(child: Text(state.message));
         } else if (state is AllBooksSuccess) {
+          if(state.books.length ==0||state.books.isEmpty){
+            return Center(child:Text("No books"));
+          }
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: GridView.builder(
