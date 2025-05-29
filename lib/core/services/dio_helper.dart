@@ -8,8 +8,7 @@ class DioHelper {
 
   static const String baseUrl = "http://$activeHost:8000/api/v1/";
   static String? token;
-
-  static void init() {
+    static void init() {
     dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
