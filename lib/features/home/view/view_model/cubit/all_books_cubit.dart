@@ -1,4 +1,3 @@
-import 'package:bookstore_app/features/category/data/model/category_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookstore_app/core/services/dio_helper.dart';
 import 'package:bookstore_app/features/home/data/models/book_model.dart';
@@ -9,11 +8,11 @@ class AllBooksCubit extends Cubit<AllBooksState> {
 
   List<BookModel>? books;
 
-  Future<void> fetchBooks( {Categories?category}) async {
+  Future<void> fetchBooks() async {
     emit(AllBooksLoading());
 
     try {
-      final response = await DioHelper.getData(url: category?.endpoint??"/books", query: {'limit': 10});
+      final response = await DioHelper.getData(url: "/books", query: {'limit': 10});
       final List<BookModel> fetchedBooks = (response.data['data']['books'] as List)
           .map((book) => BookModel.fromJson(book))
           .toList();

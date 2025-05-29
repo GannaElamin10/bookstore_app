@@ -11,11 +11,9 @@ import 'change_password_state.dart';
 class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   ChangePasswordCubit() : super(ChangePasswordStateInit());
 
-  final TextEditingController currentPasswordController =
-      TextEditingController();
+  final TextEditingController currentPasswordController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   Future<void> confirmPassword(BuildContext context) async {
     final data = {
@@ -24,13 +22,12 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
       'new_password_confirmation': confirmPasswordController.text.trim(),
     };
 
+    print('Request Body: $data');
     emit(LoadingConfirm());
 
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-
-      DioHelper.token = token;
 
       if (token == null) {
         emit(LoadingError());
@@ -47,24 +44,24 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
       final responseData = response.data as Map<String, dynamic>;
       print("Response Data: $responseData");
 
-      // if (responseData['status'] == true) {
-      emit(LoadingSuccess());
-      Utils.showSnackBar(context, responseData["message"]);
-      MagicRouter.navigateTo(LoginScreen());
-      // } else {
-      //   emit(LoadingError());
-      //   Utils.showSnackBar(
-      //     context,
-      //     responseData['message'] ?? "An error occurred.",
-      //   );
-      // }
+      if (responseData['status'] == true) {
+        emit(LoadingSuccess());
+        Utils.showSnackBar(context, responseData["message"]);
+        MagicRouter.navigateTo(LoginScreen());
+      } else {
+        emit(LoadingError());
+        Utils.showSnackBar(
+          context,
+          responseData['message'] ?? "An error occurred.",
+        );
+      }
     } catch (e) {
       emit(LoadingError());
       Utils.showSnackBar(
         context,
         "Something went wrong. Please try again.",
       );
-      // print("❌ Error: $e");
+      print("❌ Error: $e");
     }
   }
 }

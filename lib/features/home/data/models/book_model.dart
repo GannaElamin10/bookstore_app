@@ -1,4 +1,3 @@
-import 'package:bookstore_app/core/services/dio_helper.dart';
 
 class Books {
   final int id;
@@ -15,7 +14,7 @@ class Books {
   final int publisherId;
 
   Books({
-    required this.id,
+     required this.id,
     required this.isbnCode,
     required this.title,
     required this.image,
@@ -32,12 +31,11 @@ class Books {
   factory Books.fromJson(Map<String, dynamic> json) {
     final String _image =
         json['image'];
-
     return Books(
       id: json['id'],
       isbnCode: json['isbn_code'] ?? '',
       title: json['title'] ?? '',
-      image: _image,
+      image: _image ,
       author: json['author'] ?? '',
       description: json['description'] ?? '',
       price: json['price'] ?? '',
@@ -49,6 +47,8 @@ class Books {
     );
   }
 }
+
+
 
 class BookModel {
   final int id;
@@ -80,14 +80,12 @@ class BookModel {
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
-    final String _image =
-        json['image'];
-
+    final String _image = json['image'];
     return BookModel(
       id: json['id'],
       isbnCode: json['isbn_code'] ?? '',
       title: json['title'] ?? '',
-      image: _image,
+      image: _image ,
       author: json['author'] ?? '',
       description: json['description'] ?? '',
       price: json['price'] ?? '',
@@ -99,7 +97,6 @@ class BookModel {
     );
   }
 }
-
 class WishlistModel {
   final List<BookModel> books;
   final String message;
@@ -121,6 +118,7 @@ class WishlistModel {
     );
   }
 }
+
 
 class BookDetails {
   Data? data;

@@ -1,6 +1,5 @@
 import 'package:bookstore_app/core/icons/wish_list_icon.dart';
 import 'package:bookstore_app/features/home/view/presentation/all_books_screen.dart';
-
 import 'package:bookstore_app/features/home/view/view_model/home_cubit.dart';
 import 'package:bookstore_app/features/home/view/view_model/home_state.dart';
 import 'package:bookstore_app/features/home/view/widget/flash_sale.dart';
@@ -15,8 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit()..getlimitBooks(),
-      child: Scaffold(
+      create: (context) => HomeCubit()..getlimitBooks(),     child: Scaffold(
         appBar: AppBar(
           title: const Text('Welcome'),
           actions: const [WishListIcon()],
@@ -94,7 +92,7 @@ class RecommendedSection extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AllBooksScreen()),
+                  MaterialPageRoute(builder: (context) => const AllBooksScreen()),
                 );
               },
               icon: const Icon(Icons.arrow_forward, color: Colors.pink),

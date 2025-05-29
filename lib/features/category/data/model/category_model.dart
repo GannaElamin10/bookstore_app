@@ -1,7 +1,7 @@
 class CategoryModel {
   Data? data;
   String? message;
-  List<String>? error;
+  List<String>? error;  
   int? status;
 
   CategoryModel({this.data, this.message, this.error, this.status});
@@ -55,15 +55,14 @@ class Data {
 class Categories {
   int id;
   String title;
-  String? endpoint;
   String image;
 
-  Categories({this.id = 0, this.title = '', this.image = '', this.endpoint});
+  Categories({this.id = 0, this.title = '', this.image = ''});
+
 
   factory Categories.fromJson(Map<String, dynamic> json) {
     final _id = json['id'] ?? 0;
     final _title = json['title'] ?? '';
-    final _endpoint = json['/1/books'];
     final String _image =
         json['image'];
 
@@ -71,9 +70,9 @@ class Categories {
       id: _id,
       title: _title,
       image: _image,
-      endpoint: _endpoint,
     );
   }
+
 
   Map<String, dynamic> toJson() {
     return {
@@ -84,10 +83,11 @@ class Categories {
   }
 }
 
+
 class Meta {
   int total;
   int perPage;
-  int currentPage;
+  int currentPage;  
   int lastPage;
 
   Meta({
@@ -116,8 +116,8 @@ class Meta {
 class Links {
   String first;
   String last;
-  String? prev;
-  String? next;
+  String? prev;  
+  String? next;  
 
   Links({
     this.first = '',

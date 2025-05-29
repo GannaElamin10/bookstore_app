@@ -45,6 +45,9 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   shared_preferences: ^2.0.15
   url_launcher: ^6.3.1
+  internet_connection_checker: ^3.0.1
+
+
 dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:

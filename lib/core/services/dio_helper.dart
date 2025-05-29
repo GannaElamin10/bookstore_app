@@ -49,7 +49,7 @@ class DioHelper {
 
   static Future<Response> postData({
     required String url,
-    required dynamic data, // <-- Now dynamic to support FormData
+     dynamic data, // <-- Now dynamic to support FormData
     String? token,
     bool isFormData = false, // <-- New flag
   }) async {
@@ -62,21 +62,8 @@ class DioHelper {
     return await dio!.get('search', queryParameters: {'query': query});
   }
 
-  static Future<Response> filterData(
-      {required Map<String, dynamic> filters}) async {
+  static Future<Response> filterData({required Map<String, dynamic> filters}) async {
     _setHeaders();
     return await dio!.get('filter', queryParameters: filters);
-  }
-
-  static Future<Response> postFormData({
-    required String url,
-    required FormData data,
-    String? token,
-  }) async {
-    dio!.options.headers = {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'multipart/form-data',
-    };
-    return await dio!.post(url, data: data);
   }
 }

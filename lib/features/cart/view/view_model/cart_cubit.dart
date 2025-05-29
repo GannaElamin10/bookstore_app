@@ -1,4 +1,5 @@
 import 'package:bookstore_app/features/home/view/view_model/home_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/magic_router/magic_router.dart';
@@ -57,25 +58,42 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  deleteCartProduct() async {
-    final body = {
-      'book_id': 100,
-    };
+  Future<void> deleteCartProduct(BuildContext context,int bookId) async {
     emit(DeleteProductLoadingState());
-    final response = await DioHelper.postData(
-      url: 'remove-from-cart',
-      data: body,
-    ).then((response) {
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+
+      if (token == null) {
+        emit(DeleteProductErrorState());
+        Utils.showSnackBar(context, "Authentication token not found.");
+        return;
+      }
+
+      final response = await DioHelper.postData(
+        url: '/remove-from-cart',
+        data: {'book_id': bookId},
+        token: token,
+      );
+
       final data = response.data as Map<String, dynamic>;
 
-      if (data['status'] == true) {
+      if (data['status'] == 200) {
+        Utils.showSnackBar(context, data['message']);
         emit(DeleteProductSuccessState());
-        Utils.showSnackBar(MagicRouter.currentContext!, data['message']);
-        // fetchCartProducts();
-        //      print(productId);
+
+
+        // Refresh cart after deletion
+       await getCart();
       } else {
         emit(DeleteProductErrorState());
+        Utils.showSnackBar(context, data['message'] ?? 'Failed to delete item.');
       }
-    });
+    } catch (e) {
+      emit(DeleteProductErrorState());
+      Utils.showSnackBar(context, 'An error occurred: ${e.toString()}');
+    }
   }
+
 }
