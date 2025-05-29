@@ -20,12 +20,32 @@ class _ProfilePageState extends State<ProfilePage> {
   late ProfileCubit _profileCubit;
 
   final List<Map<String, dynamic>> items = [
-    {'icon_color': Colors.black, 'icon': Icons.person_2_outlined, 'title': 'Edit Profile'},
-    {'icon_color': Colors.orange, 'icon': Icons.history, 'title': 'Order History'},
-    {'icon_color': Colors.blue, 'icon': Icons.lock_open, 'title': 'Change Password'},
-    {'icon_color': Colors.blueAccent, 'icon': Icons.help_outline, 'title': 'Help'},
+    {
+      'icon_color': Colors.black,
+      'icon': Icons.person_2_outlined,
+      'title': 'Edit Profile'
+    },
+    {
+      'icon_color': Colors.orange,
+      'icon': Icons.history,
+      'title': 'Order History'
+    },
+    {
+      'icon_color': Colors.blue,
+      'icon': Icons.lock_open,
+      'title': 'Change Password'
+    },
+    {
+      'icon_color': Colors.blueAccent,
+      'icon': Icons.help_outline,
+      'title': 'Help'
+    },
     {'icon_color': Colors.red, 'icon': Icons.logout, 'title': 'Log Out'},
-    {'icon_color': Colors.pink, 'icon': Icons.delete, 'title': 'Delete Account'},
+    {
+      'icon_color': Colors.pink,
+      'icon': Icons.delete,
+      'title': 'Delete Account'
+    },
   ];
 
   @override
@@ -48,8 +68,10 @@ class _ProfilePageState extends State<ProfilePage> {
       child: BlocListener<ProfileCubit, ProfileState>(
         listener: (context, state) {
           if (state is ProfileErrorState) {
-            final msg = (state.error['general']?.first) ?? 'Something went wrong';
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+            final msg =
+                (state.error['general']?.first) ?? 'Something went wrong';
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(msg)));
           }
           if (state is UpdateProfileSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -64,7 +86,8 @@ class _ProfilePageState extends State<ProfilePage> {
             child: BlocBuilder<ProfileCubit, ProfileState>(
               builder: (context, state) {
                 final user = (state is ProfileSuccessState) ? state.user : {};
-                final imageUrl = (user?['image'] is String && (user!['image'] as String).isNotEmpty)
+                final imageUrl = (user?['image'] is String &&
+                        (user!['image'] as String).isNotEmpty)
                     ? user['image']
                     : null;
 
@@ -74,48 +97,70 @@ class _ProfilePageState extends State<ProfilePage> {
                     CircleAvatar(
                       radius: 50,
                       backgroundImage: imageUrl != null
-                          ? NetworkImage(imageUrl)
-                          : const AssetImage('assets/image/profile.jpg') as ImageProvider,
+                          ? NetworkImage(
+                              imageUrl
+                                  .replaceAll("127.0.0.1", "10.0.2.2")
+                                  .replaceAll("192.168.1.12", "10.0.2.2"),
+                            )
+                          : const AssetImage('assets/image/profile.jpg')
+                              as ImageProvider,
                     ),
                     const SizedBox(height: 30),
                     ...items.map((item) => ListTile(
-                      leading: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(item['icon'], color: item['icon_color']),
-                      ),
-                      title: Text(item['title'], style: const TextStyle(fontSize: 16)),
-                      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                      onTap: () async {
-                        switch (item['title']) {
-                          case 'Edit Profile':
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => const PersonalDataPage()),
-                            );
-                            _profileCubit.getProfile(); // Refresh after edit
-                            break;
-                          case 'Change Password':
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => ChangePasswordPage()));
-                            break;
-                          case 'Help':
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => HelpPage()));
-                            break;
-                          case 'Order History':
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => OrderHistoryPage()));
-                            break;
-                          case 'Log Out':
-                            _profileCubit.logOut(context);
-                            break;
-                          case 'Delete Account':
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => DeleteAccountPage()));
-                            break;
-                        }
-                      },
-                    )),
+                          leading: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child:
+                                Icon(item['icon'], color: item['icon_color']),
+                          ),
+                          title: Text(item['title'],
+                              style: const TextStyle(fontSize: 16)),
+                          trailing:
+                              const Icon(Icons.arrow_forward_ios, size: 16),
+                          onTap: () async {
+                            switch (item['title']) {
+                              case 'Edit Profile':
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const PersonalDataPage()),
+                                );
+                                _profileCubit
+                                    .getProfile(); // Refresh after edit
+                                break;
+                              case 'Change Password':
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => ChangePasswordPage()));
+                                break;
+                              case 'Help':
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => HelpPage()));
+                                break;
+                              case 'Order History':
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => OrderHistoryPage()));
+                                break;
+                              case 'Log Out':
+                                _profileCubit.logOut(context);
+                                break;
+                              case 'Delete Account':
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => DeleteAccountPage()));
+                                break;
+                            }
+                          },
+                        )),
                   ],
                 );
               },

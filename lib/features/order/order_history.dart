@@ -146,7 +146,7 @@ class OrderCard extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => OrderDetailsScreen()),
+                      MaterialPageRoute(builder: (_) => OrderDetailsScreen(orderId: int.parse(order.number),)),
                     );
                   },
                   icon: Icon(Icons.arrow_forward, color: Colors.pink),
