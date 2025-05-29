@@ -4,7 +4,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 class DioHelper {
   static Dio? dio;
 
-  static const String activeHost = "https://project.ahdafweb.com/public";
+  static const String activeHost = "http://127.0.0.1:8000";
   static const String baseUrl = "$activeHost/api/v1";
   static String? token;
 
