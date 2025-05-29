@@ -1,4 +1,3 @@
-import 'package:bookstore_app/core/services/dio_helper.dart';
 import 'package:bookstore_app/features/home/data/models/book_model.dart';
 import 'package:bookstore_app/features/search/view/search/search_cubit.dart';
 import 'package:bookstore_app/features/search/view/search/search_state.dart';
@@ -187,15 +186,17 @@ class SearchBody extends StatelessWidget {
         } else if (state is SearchError) {
           return Center(child: Text('Error: ${state.message}'));
         } else if (state is SearchSuccess) {
-          // Render search results with spacing between items
-          return ListView.separated(
-            shrinkWrap: true, // Allow it to take the necessary space
-            physics: NeverScrollableScrollPhysics(), // Disable internal scrolling
-            itemCount: state.searchResults.length,
-            itemBuilder: (context, index) {
-              return BookCardItem(book: state.searchResults[index]);
-            },
-            separatorBuilder: (context, index) => const SizedBox(height: 12), // Space between items
+          // Render search results
+          return Column(
+            children: [
+              for (var book in state.searchResults)
+                Row(
+                  children: [
+                    BookCardItem(book: book), // Pass book to build card
+                    SizedBox(width: 10),
+                  ],
+                ),
+            ],
           );
         }
         return Container(); // In case of SearchInitial state
@@ -204,7 +205,6 @@ class SearchBody extends StatelessWidget {
   }
 }
 
-    
 class BookCardItem extends StatelessWidget {
   const BookCardItem({
     required this.book,
@@ -243,23 +243,7 @@ class BookCardItem extends StatelessWidget {
                     color: Colors.grey[100],
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: ClipOval(
-                              child: IconButton(
-                                icon: const Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.pinkAccent,
-                                ),
-                                onPressed: () async {
-                                  var x = await DioHelper.postData(
-                                    url: '/add-to-wishlist',
-                                    data: {'book_id': book.id},
-                                  );
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('${x.data['message']}')),
-                                  );
-                                },
-                              ),
-                            ),
+                  child: const Icon(Icons.favorite_border, size: 18),
                 ),
               ),
             ],

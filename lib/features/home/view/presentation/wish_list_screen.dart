@@ -66,7 +66,6 @@ class WishListItem extends StatelessWidget {
       color: Colors.white,
       padding: const EdgeInsets.all(8.0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.network(
             book.image ?? '',
@@ -80,41 +79,16 @@ class WishListItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        book.title ?? '',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.delete, color: Colors.red),
-                      onPressed: () {
-                        context.read<WishListCubit>().removeFromWishlist(book.id!);
-                      },
-                    ),
-                  ],
+                Text(
+                  book.title ?? '',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 7),
                 Text('Author: ${book.author ?? ''}'),
                 const SizedBox(height: 15),
-                Text(
-                  book.stockQuantity == 0
-                      ? 'Item out of stock'
-                      : 'Item in stock',
-                  style: TextStyle(
-                    color: book.stockQuantity == 0
-                        ? const Color(0xFFEB4335)
-                        : const Color(0xFF34A853),
-                    fontWeight: FontWeight.bold,
-                  ),
+                const Text(
+                  'Item out of stock',
+                  style: TextStyle(color: Color(0xFFEB4335)),
                 ),
               ],
             ),

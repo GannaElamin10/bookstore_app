@@ -15,7 +15,7 @@ class Books {
   final int publisherId;
 
   Books({
-    required this.id,
+     required this.id,
     required this.isbnCode,
     required this.title,
     required this.image,
@@ -30,14 +30,13 @@ class Books {
   });
 
   factory Books.fromJson(Map<String, dynamic> json) {
-    final String _image =
-        json['image'].replaceAll("127.0.0.1", "192.168.1.12") ?? "";
-
+        final String _image= json['image'].replaceAll("127.0.0.1",DioHelper.activeHost  ) ?? "";
+  
     return Books(
       id: json['id'],
       isbnCode: json['isbn_code'] ?? '',
       title: json['title'] ?? '',
-      image: _image,
+      image: _image ,
       author: json['author'] ?? '',
       description: json['description'] ?? '',
       price: json['price'] ?? '',
@@ -49,6 +48,8 @@ class Books {
     );
   }
 }
+
+
 
 class BookModel {
   final int id;
@@ -80,14 +81,13 @@ class BookModel {
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
-    final String _image =
-        json['image'].replaceAll("127.0.0.1", "192.168.1.12") ?? "";
-
+        final String _image= json['image'].replaceAll("127.0.0.1",DioHelper.activeHost  ) ?? "";
+  
     return BookModel(
       id: json['id'],
       isbnCode: json['isbn_code'] ?? '',
       title: json['title'] ?? '',
-      image: _image,
+      image: _image ,
       author: json['author'] ?? '',
       description: json['description'] ?? '',
       price: json['price'] ?? '',
@@ -99,7 +99,6 @@ class BookModel {
     );
   }
 }
-
 class WishlistModel {
   final List<BookModel> books;
   final String message;
@@ -121,6 +120,7 @@ class WishlistModel {
     );
   }
 }
+
 
 class BookDetails {
   Data? data;

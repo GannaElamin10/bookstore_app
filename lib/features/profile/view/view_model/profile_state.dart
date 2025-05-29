@@ -8,6 +8,11 @@ abstract class ProfileState {
 class ProfileInitial extends ProfileState {}
 
 class ProfileLoadingState extends ProfileState {}
+class LoadingHelp extends ProfileState{}
+class LoadingError extends ProfileState{}
+class LoadingSuccess extends ProfileState{}
+class LoadingLogOut extends ProfileState{}
+
 
 class ProfileSuccessState extends ProfileState {
   final Map<String, dynamic> userData;
@@ -17,23 +22,13 @@ class ProfileSuccessState extends ProfileState {
   @override
   Map<String, dynamic>? get user => userData;
 }
-
-class UpdateProfileLoading extends ProfileState {}
-
-class UpdateProfileSuccess extends ProfileState {}
-
-class UpdateProfileFailed extends ProfileState {}
-
+class UpdateProfileLoading extends ProfileState{}
+class DeleteAccountLoading extends ProfileState{}
+class DeleteAccountSuccess extends ProfileState{}
+class DeleteAccountError extends ProfileState{}
+class UpdateProfileSuccess extends ProfileState{}
+class UpdateProfileFailed extends ProfileState{}
 class ProfileErrorState extends ProfileState {
   final Map<String, List<String>> error;
   ProfileErrorState({required this.error});
 }
-
-class AuthLogoutState extends ProfileState {}
-
-class AuthErrorState extends ProfileState {
-  final String error;
-  AuthErrorState({required this.error});
-}
-
-class AuthLoadingState extends ProfileState {}

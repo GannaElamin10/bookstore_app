@@ -27,10 +27,12 @@ class CartItemWidget extends StatelessWidget {
             // ),
             const SizedBox(width: 12),
 
+            /// Expanded content area
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  /// Prevent long titles from overflowing
                   Text(
                     book.title,
                     maxLines: 2,
@@ -42,7 +44,7 @@ class CartItemWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '${book.subAmount} EGP',
+                    '${book.price} EGP',
                     style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.w500),
                   ),
@@ -76,7 +78,11 @@ class CartItemWidget extends StatelessWidget {
                   onPressed: () {
                     cartCubit.updateQuantity(book.id, book.quantity + 1);
                   },
-                ),
+                )
+                ,
+
+                InkWell(onTap: (){cartCubit.deleteCartProduct(context,book.id);},
+                    child: Icon(Icons.delete,color: Colors.red,))
               ],
             ),
           ],

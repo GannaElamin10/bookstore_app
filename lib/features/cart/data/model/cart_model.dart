@@ -29,7 +29,7 @@ class CartBook {
   final String image;
   final String price;
   final String? discount;
-  final dynamic priceAfterDiscount;
+  final int priceAfterDiscount;
   final int quantity;
   final String subAmount;
 
@@ -53,7 +53,9 @@ class CartBook {
       image: json['book_image'].toString(),
       price: json['book_price'].toString(),
       discount: json['book_discount']?.toString(),
-      priceAfterDiscount: json['book_price_after_discount'] ?? '',
+      priceAfterDiscount: json['book_price_after_discount'] is int
+          ? json['book_price_after_discount']
+          : int.tryParse(json['book_price_after_discount'].toString()) ?? 0,
       quantity: json['book_quantity'] is int
           ? json['book_quantity']
           : int.tryParse(json['book_quantity'].toString()) ?? 1,

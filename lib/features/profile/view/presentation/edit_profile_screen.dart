@@ -1,3 +1,4 @@
+// edit_profile_screen.dart
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +16,8 @@ class PersonalDataPage extends StatefulWidget {
 class _PersonalDataPageState extends State<PersonalDataPage> {
   final ImagePicker _picker = ImagePicker();
   File? _pickedImage;
+
+  final _formKey = GlobalKey<FormState>();
 
   late TextEditingController nameController;
   late TextEditingController emailController;
@@ -42,9 +45,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text('Failed to pick image: $e'),
-            backgroundColor: Colors.red),
+        SnackBar(content: Text('Failed to pick image: $e'), backgroundColor: Colors.red),
       );
     }
   }
@@ -59,11 +60,11 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Profile updated successfully')),
             );
+            Navigator.pop(context);
           } else if (state is ProfileErrorState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content:
-                    Text(state.error['general']?.first ?? 'An error occurred'),
+                content: Text(state.error['general']?.first ?? 'An error occurred'),
                 backgroundColor: Colors.red,
               ),
             );
@@ -82,87 +83,98 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
             appBar: AppBar(
               backgroundColor: Colors.white,
               elevation: 0,
-              title: const Text('Edit Profile',
-                  style: TextStyle(color: Colors.black)),
+              title: const Text('Edit Profile', style: TextStyle(color: Colors.black)),
               iconTheme: const IconThemeData(color: Colors.black),
               leading: const BackButton(),
             ),
             body: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-              child: Column(
-                children: [
-                  Stack(
-                    children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: _pickedImage != null
-                            ? FileImage(_pickedImage!)
-                            : (user['image'] != null
-                                    ? NetworkImage(user['image'])
-                                    : const AssetImage(
-                                        'assets/image/profile.jpg'))
-                                as ImageProvider,
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: GestureDetector(
-                          onTap: _pickImage,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.pink,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundImage: _pickedImage != null
+                              ? FileImage(_pickedImage!)
+                              : (user['image'] != null && user['image'].toString().isNotEmpty)
+                              ? NetworkImage(user['image']) as ImageProvider
+                              : const AssetImage('assets/image/profile.jpg'),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: _pickImage,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.pink,
+                              ),
+                              padding: const EdgeInsets.all(6),
+                              child: const Icon(Icons.add, color: Colors.white, size: 20),
                             ),
-                            padding: const EdgeInsets.all(6),
-                            child: const Icon(Icons.add,
-                                color: Colors.white, size: 20),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 30),
-                  _buildLabel('Name'),
-                  _buildInputField(controller: nameController),
-                  _buildLabel('Email'),
-                  _buildInputField(controller: emailController),
-                  _buildLabel('Phone Number'),
-                  _buildInputField(controller: phoneController),
-                  _buildLabel('City'),
-                  _buildInputField(controller: cityController),
-                  _buildLabel('Address'),
-                  _buildInputField(controller: addressController),
-                  const SizedBox(height: 30),
-                  ElevatedButton(
-                    onPressed: () {
-                      final updatedData = {
-                        'name': nameController.text.trim(),
-                        'email': emailController.text.trim(),
-                        'phone': phoneController.text.trim(),
-                        'city': cityController.text.trim(),
-                        'address': addressController.text.trim()
-                        // "image":_pickedImage
-                      };
-
-                      context.read<ProfileCubit>().updateProfile(updatedData);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.pink,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 15),
+                      ],
                     ),
-                    child: const Text('Save',
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                  ),
-                ],
+                    const SizedBox(height: 30),
+                    _buildLabel('Name'),
+                    _buildInputField(controller: nameController, validator: _required),
+                    _buildLabel('Email'),
+                    _buildInputField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: _validateEmail,
+                    ),
+                    _buildLabel('Phone Number'),
+                    _buildInputField(controller: phoneController, keyboardType: TextInputType.phone, validator: _required),
+                    _buildLabel('City'),
+                    _buildInputField(controller: cityController, validator: _required),
+                    _buildLabel('Address'),
+                    _buildInputField(controller: addressController, validator: _required),
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          final updatedData = {
+                            'name': nameController.text.trim(),
+                            'email': emailController.text.trim(),
+                            'phone': phoneController.text.trim(),
+                            'city': cityController.text.trim(),
+                            'address': addressController.text.trim(),
+                            "image": _pickedImage,
+                          };
+
+                          context.read<ProfileCubit>().updateProfile(context,updatedData);
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.pink,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                      ),
+                      child: const Text('Save', style: TextStyle(fontSize: 16, color: Colors.white)),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
         },
       ),
     );
+  }
+
+  String? _required(String? value) => value == null || value.isEmpty ? 'This field is required' : null;
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) return 'Please enter your email';
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (!emailRegex.hasMatch(value)) return 'Enter a valid email';
+    return null;
   }
 
   Widget _buildLabel(String label) {
@@ -175,14 +187,19 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
     );
   }
 
-  Widget _buildInputField({required TextEditingController controller}) {
-    return TextField(
+  Widget _buildInputField({
+    required TextEditingController controller,
+    TextInputType keyboardType = TextInputType.text,
+    String? Function(String?)? validator,
+  }) {
+    return TextFormField(
       controller: controller,
+      keyboardType: keyboardType,
+      validator: validator,
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
