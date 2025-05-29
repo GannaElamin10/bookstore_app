@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           onPressed: () {
             
-                            AuthCubit.get(context).signIn(
+                            AuthCubit().get(context).signIn(
                                 email: emailController.text,
                                 password: passwordController.text);
                           },

@@ -1,11 +1,8 @@
 import 'package:bookstore_app/core/services/dio_helper.dart';
-import 'package:bookstore_app/features/home/view/view_model/home_cubit.dart';
-import 'package:bookstore_app/features/home/view/view_model/home_state.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:bookstore_app/features/home/data/models/book_model.dart';
 import 'package:bookstore_app/features/home/view/presentation/book_details.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RecommendedViewItem extends StatefulWidget {
   const RecommendedViewItem({super.key, required this.book,this.showDiscount=false});
@@ -49,20 +46,15 @@ class _RecommendedViewItemState extends State<RecommendedViewItem> {
   @override
   Widget build(BuildContext context) {
     final book = widget.book;
-    return BlocBuilder<HomeCubit, HomeStates>(
-
-
-      builder: (context, state) {
-        final controller = BlocProvider.of<HomeCubit>(context);
 
     return InkWell(
-  onTap: () {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => BookDetailsScreen(bookId: book.id!),
-      ),
-    );
-  },
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BookDetailsScreen(bookId: book.id!),
+          ),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
@@ -117,8 +109,7 @@ class _RecommendedViewItemState extends State<RecommendedViewItem> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Spacer(),
+                    const Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -144,7 +135,7 @@ class _RecommendedViewItemState extends State<RecommendedViewItem> {
                                 Icons.shopping_cart_outlined,
                                 color: Colors.pinkAccent,
                               ),
-                              onPressed: () {controller.addCartProduct(book.id);},
+                              onPressed: () {},
                             ),
                             ClipOval(
                               child: IconButton(
@@ -154,15 +145,7 @@ class _RecommendedViewItemState extends State<RecommendedViewItem> {
                                       : Icons.favorite_border,
                                   color: Colors.pink,
                                 ),
-                                onPressed: () async {
-                                  var x = await DioHelper.postData(
-                                    url: '/add-to-wishlist',
-                                    data: {'book_id': book.id},
-                                  );
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('${x.data['message']}')),
-                                  );
-                                },
+                                onPressed: toggleWishlist,
                               ),
                             ),
                           ],
@@ -177,7 +160,5 @@ class _RecommendedViewItemState extends State<RecommendedViewItem> {
         ),
       ),
     );
-  },
-);
   }
 }

@@ -15,16 +15,3 @@ class LoginErrorState extends AuthStates {
 
   LoginErrorState({required this.error});
 }
-
-class SignUpLoadingState extends AuthStates {}
-
-class SignUpSuccessState extends AuthStates {
-  final String message;
-  SignUpSuccessState({required this.message});
-}
-
-class SignUpErrorState extends AuthStates {
-  final Map<String, List<String>> error;
-
-  SignUpErrorState({required this.error});
-}
