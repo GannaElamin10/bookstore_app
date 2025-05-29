@@ -65,7 +65,7 @@ class Categories {
     final _title = json['title'] ?? '';
     final _endpoint = json['/1/books'];
     final String _image =
-        json['image'].replaceAll("127.0.0.1", "192.168.1.12") ?? "";
+        json['image'];
 
     return Categories(
       id: _id,

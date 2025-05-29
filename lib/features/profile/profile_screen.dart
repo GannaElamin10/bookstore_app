@@ -86,10 +86,10 @@ class ProfilePage extends StatelessWidget {
                     }
                   else if (item['title'] == 'Change Password')
                     {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => ChangePasswordPage()),
-                      )
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (_) => ChangePasswordPage()),
+                      // )
                     }
                   else if (item['title'] == 'Help')
                     {

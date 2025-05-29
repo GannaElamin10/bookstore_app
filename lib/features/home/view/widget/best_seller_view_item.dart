@@ -9,7 +9,7 @@ class BestSellerViewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint("Ganna: ");
-    debugPrint(book.image.replaceAll("127.0.0.1", "192.168.1.12") ?? "");
+    debugPrint(book.image.replaceAll("127.0.0.1", "192.168.1.12") );
     return Container(
       width: 140,
       margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -19,7 +19,9 @@ class BestSellerViewItem extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.network(
-              book.image.replaceAll("127.0.0.1", "192.168.1.12") ?? "",
+              book.image.replaceAll("127.0.0.1", "10.0.2.2")
+                    .replaceAll("192.168.1.12", "10.0.2.2"),
+              // book.image.replaceAll("127.0.0.1", "192.168.1.12") ?? "",
               height: 180,
               width: 140,
               fit: BoxFit.cover,

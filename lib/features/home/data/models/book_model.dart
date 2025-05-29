@@ -31,7 +31,7 @@ class Books {
 
   factory Books.fromJson(Map<String, dynamic> json) {
     final String _image =
-        json['image'].replaceAll("127.0.0.1", "192.168.1.12") ?? "";
+        json['image'];
 
     return Books(
       id: json['id'],
@@ -81,7 +81,7 @@ class BookModel {
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
     final String _image =
-        json['image'].replaceAll("127.0.0.1", "192.168.1.12") ?? "";
+        json['image'];
 
     return BookModel(
       id: json['id'],

@@ -49,11 +49,11 @@ class ProfileCubit extends Cubit<ProfileState> {
 
       for (var entry in data.entries) {
         if (entry.key == 'image' && entry.value is File) {
-          // formData.files.add(MapEntry(
-          //   'image',
-          //   await MultipartFile.fromFile(entry.value.path,
-          //       filename: 'profile.jpg'),
-          // ));
+          formData.files.add(MapEntry(
+            'image',
+            await MultipartFile.fromFile(entry.value.path,
+                filename: 'profile.jpg'),
+          ));
         } else {
           formData.fields.add(MapEntry(entry.key, entry.value.toString()));
         }

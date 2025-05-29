@@ -1,4 +1,3 @@
-
 import 'package:bookstore_app/features/category/data/model/category_model.dart';
 import 'package:bookstore_app/features/category/view/view_model/cubit/category_cubit.dart';
 import 'package:bookstore_app/features/category/view/view_model/cubit/category_state.dart';
@@ -55,8 +54,7 @@ class CategoryScreen extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => AllBooksScreen(categories: category)),
-          
+              builder: (_) => AllBooksScreen(categories: category)),
         );
       },
       child: Card(
@@ -67,19 +65,19 @@ class CategoryScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              category.image != null && category.image!.isNotEmpty
-                  ? Image.network(
-                      category.image!,
-                      height: 150,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) =>
-                          const Icon(Icons.broken_image, size: 50),
-                    )
-                  : const Icon(Icons.image, size: 100),
+              Image.network(
+                category.image
+                    .replaceAll("127.0.0.1", "10.0.2.2")
+                    .replaceAll("192.168.1.12", "10.0.2.2"),
+                height: 150,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) =>
+                    const Icon(Icons.broken_image, size: 50),
+              ),
               const SizedBox(height: 12),
               Text(
-                category.title ?? 'No title available',
+                category.title,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,

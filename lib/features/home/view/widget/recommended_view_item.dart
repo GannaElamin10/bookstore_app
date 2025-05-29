@@ -66,14 +66,30 @@ class _RecommendedViewItemState extends State<RecommendedViewItem> {
                 aspectRatio: 555 / 700,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: CachedNetworkImage(
-                    fit: BoxFit.fill,
-                    imageUrl:
-                        'http://192.168.1.12:8000/upload/books/1747066544_6042394_153037.jpeg.webp',
-                    errorWidget: (context, url, error) {
-                      return const Icon(Icons.error);
+                  child: Image.network(
+                    book.image
+                        .replaceAll("127.0.0.1", "10.0.2.2")
+                        .replaceAll("192.168.1.12", "10.0.2.2"),
+                    // book.image.replaceAll("127.0.0.1", "192.168.1.12") ?? "",
+                    height: 180,
+                    width: 140,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: Colors.grey[300],
+                        height: 180,
+                        width: 140,
+                        child: const Icon(Icons.broken_image),
+                      );
                     },
                   ),
+                  //  CachedNetworkImage(
+                  //   fit: BoxFit.fill,
+                  //   imageUrl:,
+                  //   errorWidget: (context, url, error) {
+                  //     return const Icon(Icons.error);
+                  //   },
+                  // ),
                 ),
               ),
               const SizedBox(width: 16),
