@@ -4,7 +4,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 class DioHelper {
   static Dio? dio;
 
- static const String activeHost= "172.20.10.10";
+ static const String activeHost= "192.168.1.24";
 
   static const String baseUrl = "http://$activeHost:8000/api/v1/";
   static String? token;
@@ -34,17 +34,19 @@ class DioHelper {
     );
   }
 
-  static void _setHeaders() {
+   static void _setHeaders({String? customToken, bool isFormData = false}) {
     dio!.options.headers = {
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      if (token != null) 'Authorization': 'Bearer $token',
+      if (!isFormData) 'Content-Type': 'application/json',
+      if ((customToken ?? token) != null)
+        'Authorization': 'Bearer ${customToken ?? token}',
     };
   }
 
+
   static Future<Response> getData({
     required String url,
-    Map<String, dynamic>? query,
+    Map<String, dynamic>? query, String? token,
   }) async {
     _setHeaders();
     return await dio!.get(url, queryParameters: query);
@@ -52,12 +54,13 @@ class DioHelper {
 
   static Future<Response> postData({
     required String url,
-    Map<String, dynamic>? data,
+     dynamic data, // <-- Now dynamic to support FormData
+    String? token,
+    bool isFormData = false, // <-- New flag
   }) async {
-    _setHeaders();
+    _setHeaders(customToken: token, isFormData: isFormData);
     return await dio!.post(url, data: data);
   }
-
 
   static Future<Response> searchData({
     required String query,

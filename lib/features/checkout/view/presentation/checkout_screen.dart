@@ -85,7 +85,7 @@ class CheckoutScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const OrderHistoryPage(),
+                            builder: (context) =>  OrderHistoryScreen(),
                           ),
                         );
                       },

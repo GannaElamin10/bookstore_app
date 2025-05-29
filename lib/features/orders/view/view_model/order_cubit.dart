@@ -112,8 +112,7 @@ class OrderHistoryCubit extends Cubit<OrderState> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-
-      if (token == null) {
+if (token == null) {
         emit(LoadingAddReviewError());
         Utils.showSnackBar(context, 'No token found. Please log in again.');
         return;

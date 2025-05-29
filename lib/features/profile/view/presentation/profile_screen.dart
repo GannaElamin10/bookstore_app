@@ -105,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             Navigator.push(context, MaterialPageRoute(builder: (_) => HelpPage()));
                             break;
                           case 'Order History':
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => OrderHistoryPage()));
+                            Navigator.push(context, MaterialPageRoute(builder: (_) => OrderHistoryScreen()));
                             break;
                           case 'Log Out':
                             _profileCubit.logOut(context);

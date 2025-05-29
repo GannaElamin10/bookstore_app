@@ -23,7 +23,7 @@ class CartCubit extends Cubit<CartState> {
       print("object: $token");
       final response = await DioHelper.getData(
         url: '/show-cart',
-        token: token,
+        token : token,
         query: {},
       );
 
