@@ -1,5 +1,3 @@
-import 'package:bookstore_app/core/services/dio_helper.dart';
-import 'package:bookstore_app/features/category/data/model/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookstore_app/features/home/data/models/book_model.dart';
@@ -7,12 +5,12 @@ import 'package:bookstore_app/features/home/view/view_model/cubit/all_books_cubi
 import 'package:bookstore_app/features/home/view/view_model/cubit/all_books_state.dart';
 
 class AllBooksScreen extends StatelessWidget {
-  const AllBooksScreen({super.key,this.categories});
-final Categories?categories;
+  const AllBooksScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AllBooksCubit()..fetchBooks( category: categories),
+      create: (context) => AllBooksCubit()..fetchBooks(),
       child: Scaffold(
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
@@ -33,6 +31,7 @@ class AllBooksItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   
     return BlocBuilder<AllBooksCubit, AllBooksState>(
       builder: (context, state) {
         if (state is AllBooksLoading) {
@@ -54,8 +53,10 @@ class AllBooksItem extends StatelessWidget {
                 mainAxisSpacing: 8,
               ),
               itemBuilder: (context, index) {
+                 final String imageUrl = "http://10.0.2.2:8000/upload/books/1746038310_4658774_81h8oAttukL.SY466.jpg";
+                 ;
                 final book = state.books[index];
-                return BookCard(book: book);
+                return _buildBookCard(book);
               },
             ),
           );
@@ -65,63 +66,9 @@ class AllBooksItem extends StatelessWidget {
       },
     );
   }
-}
 
-class BookCard extends StatefulWidget {
-  final BookModel book;
-
-  const BookCard({super.key, required this.book});
-
-  @override
-  State<BookCard> createState() => _BookCardState();
-}
-
-class _BookCardState extends State<BookCard> {
-  bool isWishlisted = false;
-  bool isInCart = false;
-
-  void toggleWishlist() async {
-    try {
-      var response = await DioHelper.postData(
-        url: '/add-to-wishlist',
-        data: {'book_id': widget.book.id},
-      );
-      setState(() {
-        isWishlisted = !isWishlisted;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(response.data['message'] ?? 'Updated wishlist')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Error adding to wishlist')),
-      );
-    }
-  }
-
-  void toggleCart() async {
-    try {
-      var response = await DioHelper.postData(
-        url: '/add-to-cart',
-        data: {'book_id': widget.book.id},
-      );
-      setState(() {
-        isInCart = !isInCart;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(response.data['message'] ?? 'Updated cart')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Error adding to cart')),
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildBookCard(BookModel book) {
     return Container(
-      
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -135,12 +82,11 @@ class _BookCardState extends State<BookCard> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.network(
-                  widget.book.image,
-                  height: 140,
+                 book.image,
+                  height: 160,
                   width: double.infinity,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) =>
-                      const Icon(Icons.broken_image),
+                  errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),
                 ),
               ),
               Positioned(
@@ -153,29 +99,21 @@ class _BookCardState extends State<BookCard> {
                     color: Colors.white.withOpacity(0.8),
                     shape: BoxShape.circle,
                   ),
-                  child: IconButton(
-                    padding: EdgeInsets.zero,
-                    icon: Icon(
-                      isWishlisted ? Icons.favorite : Icons.favorite_border,
-                      size: 16,
-                      color: Colors.pinkAccent,
-                    ),
-                    onPressed: toggleWishlist,
-                  ),
+                  child: const Icon(Icons.favorite_border, size: 16),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 10),
           Text(
-            widget.book.title,
+            book.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 4),
           Text(
-            "Author: ${widget.book.author}",
+            "Author: ${book.author}",
             style: const TextStyle(fontSize: 12, color: Colors.grey),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -185,20 +123,12 @@ class _BookCardState extends State<BookCard> {
             children: [
               const Icon(Icons.attach_money, size: 16, color: Colors.black),
               Text(
-                widget.book.priceAfterDiscount ?? widget.book.price,
+                book.priceAfterDiscount ?? book.price,
                 style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
               const Spacer(),
-              IconButton(
-                icon: Icon(
-                  isInCart
-                      ? Icons.shopping_cart
-                      : Icons.shopping_cart_outlined,
-                  color: Colors.pink,
-                  size: 18,
-                ),
-                onPressed: toggleCart,
-              ),
+              const Icon(Icons.shopping_cart_outlined,
+                  size: 18, color: Colors.pink),
             ],
           ),
         ],

@@ -1,3 +1,5 @@
+import 'package:bookstore_app/features/cart/view/presentation/cart_screen.dart';
+import 'package:bookstore_app/features/cart/view/view_model/cart_cubit.dart';
 import 'package:bookstore_app/features/category/view/presentation/category_screen.dart';
 import 'package:bookstore_app/features/home/view/presentation/home_screen.dart';
 import 'package:bookstore_app/features/order/cart_screen.dart';
@@ -5,6 +7,7 @@ import 'package:bookstore_app/features/profile/profile_screen.dart';
 import 'package:bookstore_app/features/search/view/presentation/search_screen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 class NavigationBarScreen extends StatefulWidget {
@@ -19,8 +22,11 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
     HomeScreen(),
     CategoryScreen(),
     SearchScreen(),
-    CartPage(),
-   ProfilePage()
+    BlocProvider(
+      create: (context) => CartCubit()..getCart(),
+      child: const CartScreen(),
+    ),
+    ProfilePage()
   ];
   int currentIndex = 0;
   @override

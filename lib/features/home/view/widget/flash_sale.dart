@@ -1,6 +1,5 @@
 import 'package:bookstore_app/features/home/data/models/book_model.dart';
 import 'package:bookstore_app/features/home/view/presentation/all_books_screen.dart';
-
 import 'package:bookstore_app/features/home/view/presentation/book_details.dart';
 import 'package:bookstore_app/features/home/view/view_model/cubit/flash_sale_cubit/flash_sale_cubit.dart';
 import 'package:bookstore_app/features/home/view/view_model/cubit/flash_sale_cubit/flash_sale_state.dart';
@@ -52,7 +51,7 @@ class FlashSaleBody extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AllBooksScreen()),
+                              builder: (context) => const AllBooksScreen()),
                         );
                       },
                       icon: const Icon(Icons.arrow_forward, color: Colors.pink),

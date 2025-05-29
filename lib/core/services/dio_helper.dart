@@ -13,11 +13,7 @@ class DioHelper {
       BaseOptions(
         baseUrl: baseUrl,
         connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 30),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
+        receiveTimeout: const Duration(seconds: 60),
       ),
     );
 
@@ -26,7 +22,6 @@ class DioHelper {
         requestHeader: true,
         requestBody: true,
         responseBody: true,
-        responseHeader: false,
         error: true,
         compact: true,
         maxWidth: 90,
@@ -34,51 +29,41 @@ class DioHelper {
     );
   }
 
-  static void _setHeaders() {
+  static void _setHeaders({String? customToken, bool isFormData = false}) {
     dio!.options.headers = {
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      if (token != null) 'Authorization': 'Bearer $token',
+      if (!isFormData) 'Content-Type': 'application/json',
+      if ((customToken ?? token) != null)
+        'Authorization': 'Bearer ${customToken ?? token}',
     };
   }
 
   static Future<Response> getData({
     required String url,
+    String? token,
     Map<String, dynamic>? query,
   }) async {
-    _setHeaders();
+    _setHeaders(customToken: token);
     return await dio!.get(url, queryParameters: query);
   }
 
   static Future<Response> postData({
     required String url,
-    Map<String, dynamic>? data,
+     dynamic data, // <-- Now dynamic to support FormData
+    String? token,
+    bool isFormData = false, // <-- New flag
   }) async {
-    _setHeaders();
+    _setHeaders(customToken: token, isFormData: isFormData);
     return await dio!.post(url, data: data);
   }
 
-
-  static Future<Response> searchData({
-    required String query,
-  }) async {
+  static Future<Response> searchData({required String query}) async {
     _setHeaders();
-    return await dio!.get(
-      'search',
-      queryParameters: {
-        'query': query,
-      },
-    );
+    return await dio!.get('search', queryParameters: {'query': query});
   }
 
- 
-  static Future<Response> filterData({
-    required Map<String, dynamic> filters,
-  }) async {
+  static Future<Response> filterData({required Map<String, dynamic> filters}) async {
     _setHeaders();
-    return await dio!.get(
-      'filter', //      
-      queryParameters: filters,
-    );
+    return await dio!.get('filter', queryParameters: filters);
   }
 }
