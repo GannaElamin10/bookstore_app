@@ -1,3 +1,4 @@
+import 'package:bookstore_app/features/checkout/view/presentation/checkout_screen.dart';
 import 'package:bookstore_app/features/order/checkout_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +44,7 @@ class CartPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => CheckoutPage()),
+                        MaterialPageRoute(builder: (_) => CheckoutScreen()),
                       );
                     },
                     icon: const Icon(

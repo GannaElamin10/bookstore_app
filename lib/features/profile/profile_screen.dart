@@ -1,5 +1,7 @@
 import 'package:bookstore_app/features/order/order_history.dart';
+import 'package:bookstore_app/features/orders/view/presentation/order_history_screen.dart';
 import 'package:bookstore_app/features/profile/change_passowrd_screen.dart';
+import 'package:bookstore_app/features/profile/change_password/change_password_view.dart';
 import 'package:bookstore_app/features/profile/edit_profile_screen.dart';
 import 'package:bookstore_app/features/profile/help_screen.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +104,7 @@ class ProfilePage extends StatelessWidget {
                     {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => OrderHistoryScreen()),
+                        MaterialPageRoute(builder: (_) => OrderHistoryPage()),
                       )
                     }
                 },
